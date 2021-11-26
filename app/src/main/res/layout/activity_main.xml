@@ -4,13 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.hunseong.pokedex_clone.ui.main.MainViewModel" />
 
+        <variable
+            name="adapter"
+            type="com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
@@ -44,6 +51,8 @@
             android:background="@color/background900"
             android:clipToPadding="false"
             android:padding="6dp"
+            app:adapter="@{adapter}"
+            app:submitList="@{vm.list}"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbarThumbVertical="@drawable/scrollbar"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -52,6 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar_layout"
             tools:listitem="@layout/item_pokemon"
+            app:toast="@{vm.toastMessage}"
             app:spanCount="2" />
 
         <ProgressBar
@@ -60,6 +70,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
