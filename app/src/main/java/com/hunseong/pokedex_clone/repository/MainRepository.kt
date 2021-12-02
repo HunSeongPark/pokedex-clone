@@ -12,7 +12,6 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val pokedexClient: PokedexClient,
     private val pokemonDao: PokemonDao,
-    private val ioDispatcher: CoroutineDispatcher,
 ) : Repository {
 
     fun fetchPokemonList(page: Int): Flow<Result> = flow {

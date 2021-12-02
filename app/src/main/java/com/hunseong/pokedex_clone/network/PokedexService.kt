@@ -6,8 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PokedexService {
-
-
     // limit - 한 번의 network request에서 가져올 pokemon의 수
     // offset - 몇 번째 pokemon부터 가져올 지
     @GET("pokemon")
