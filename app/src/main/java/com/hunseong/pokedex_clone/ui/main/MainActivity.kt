@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hunseong.pokedex_clone.R
 import com.hunseong.pokedex_clone.databinding.ActivityMainBinding
+import com.hunseong.pokedex_clone.model.Result
 import com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
                     val isScrollEnabled = layoutManager.findLastVisibleItemPosition() + 1 < layoutManager.itemCount
-                    if(!isScrollEnabled && !viewModel.isLoading.value!!) {
+                    if(!isScrollEnabled && viewModel.list.value !is Result.Loading) {
                         viewModel.fetchNextPokemonList()
                     }
                 }

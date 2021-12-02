@@ -3,6 +3,9 @@ package com.hunseong.pokedex_clone.binding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.hunseong.pokedex_clone.model.Pokemon
+import com.hunseong.pokedex_clone.model.Result
+import com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter
 
 object RecyclerViewBinding {
 
@@ -17,9 +20,9 @@ object RecyclerViewBinding {
 
     @JvmStatic
     @BindingAdapter("submitList")
-    fun bindSubmitList(view: RecyclerView, itemList: List<Any>?) {
-        if(view.adapter != null) {
-            (view.adapter as ListAdapter<Any, *>).submitList(itemList)
+    fun bindSubmitList(view: RecyclerView, result: Result) {
+        if (result is Result.Success<*> && view.adapter is PokemonAdapter) {
+            (view.adapter as ListAdapter<Any, *>).submitList(result.data as List<Pokemon>)
         }
     }
 }

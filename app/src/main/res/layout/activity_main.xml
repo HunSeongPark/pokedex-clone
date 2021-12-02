@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.hunseong.pokedex_clone.ui.main.MainViewModel" />
@@ -51,26 +53,26 @@
             android:background="@color/background900"
             android:clipToPadding="false"
             android:padding="6dp"
-            app:adapter="@{adapter}"
-            app:submitList="@{vm.list}"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbarThumbVertical="@drawable/scrollbar"
+            app:adapter="@{adapter}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-            tools:listitem="@layout/item_pokemon"
-            app:toast="@{vm.toastMessage}"
-            app:spanCount="2" />
+            app:spanCount="2"
+            app:submitList="@{vm.list}"
+            app:toast="@{vm.list}"
+            tools:listitem="@layout/item_pokemon" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:isLoading="@{vm.list}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
