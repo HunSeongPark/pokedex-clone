@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.hunseong.pokedex_clone.R
 import com.hunseong.pokedex_clone.model.Result
+import java.io.IOException
 
 object ViewBinding {
 
@@ -17,7 +18,11 @@ object ViewBinding {
     @BindingAdapter("toast")
     fun bindToast(view: View, result: Result) {
         if (result is Result.Error) {
-            Toast.makeText(view.context, R.string.network_error, Toast.LENGTH_SHORT).show()
+            if (result.exception is IOException) {
+                Toast.makeText(view.context, R.string.network_error, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(view.context, R.string.something_error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

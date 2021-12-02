@@ -16,8 +16,10 @@ class HomeViewModel @Inject constructor(
 
     private val pokemonFetchingIndex: MutableStateFlow<Int> = MutableStateFlow(0)
 
+    var isLoading: Boolean = false
+
     val list: StateFlow<Result> = pokemonFetchingIndex.flatMapLatest { page ->
-        mainRepository.fetchPokemonList(page)
+        mainRepository.fetchPokemonList(page) { isLoading = true }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -27,6 +29,6 @@ class HomeViewModel @Inject constructor(
 
     @MainThread
     fun fetchNextPokemonList() {
-        pokemonFetchingIndex.value++
+        if (!isLoading) pokemonFetchingIndex.value++
     }
 }

@@ -13,6 +13,7 @@ import com.hunseong.pokedex_clone.databinding.FragmentHomeBinding
 import com.hunseong.pokedex_clone.model.Result
 import com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -39,20 +40,18 @@ class HomeFragment : Fragment() {
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
-                    val isScrollEnabled =
-                        layoutManager.findLastVisibleItemPosition() + 1 < layoutManager.itemCount
-                    if (!isScrollEnabled && viewModel.list.value !is Result.Loading) {
+                    Timber.tag("wtf").d(layoutManager.itemCount.toString())
+
+                    val thresholds =
+                        layoutManager.findLastCompletelyVisibleItemPosition() + 4 < layoutManager.itemCount
+                    if (!thresholds && !viewModel.isLoading) {
                         viewModel.fetchNextPokemonList()
                     }
                 }
             })
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.fetchNextPokemonList()
+        return binding.root
     }
 }

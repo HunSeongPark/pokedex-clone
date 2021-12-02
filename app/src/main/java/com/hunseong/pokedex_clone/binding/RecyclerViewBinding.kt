@@ -1,11 +1,14 @@
 package com.hunseong.pokedex_clone.binding
 
+import android.os.Handler
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hunseong.pokedex_clone.model.Pokemon
 import com.hunseong.pokedex_clone.model.Result
 import com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter
+import com.hunseong.pokedex_clone.ui.home.HomeViewModel
+import timber.log.Timber
 
 object RecyclerViewBinding {
 
@@ -19,10 +22,14 @@ object RecyclerViewBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("submitList")
-    fun bindSubmitList(view: RecyclerView, result: Result) {
+    @BindingAdapter("viewModel", "submitList")
+    fun bindSubmitList(view: RecyclerView, vm: HomeViewModel, result: Result) {
         if (result is Result.Success<*> && view.adapter is PokemonAdapter) {
             (view.adapter as ListAdapter<Any, *>).submitList(result.data as List<Pokemon>)
         }
+        Handler().postDelayed({
+            vm.isLoading = false
+        },500)
+
     }
 }
