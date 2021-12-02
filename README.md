@@ -8,5 +8,5 @@ skydoves님의 [Pokedex](https://github.com/skydoves/Pokedex) 기반 공부
                               
 ## 기존 코드 변경                   
 - (라이브러리) 기초 학습을 위해 커스텀 라이브러리 전부 제거                 
-- (Observe, Binding) 일부 LiveData -> StateFlow 공부를 위해 StateFlow로 변경                      
+- (Observe, Binding) 일부 LiveData -> Flow / StateFlow 공부를 위해 StateFlow로 변경                      
 
