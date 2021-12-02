@@ -14,12 +14,12 @@ class HomeViewModel @Inject constructor(
     private val mainRepository: MainRepository,
 ) : ViewModel() {
 
-    private val pokemonFetchingIndex: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val pokemonFetchingIndex: MutableStateFlow<Int> = MutableStateFlow(-1)
 
     var isLoading: Boolean = false
 
     val list: StateFlow<Result> = pokemonFetchingIndex.flatMapLatest { page ->
-        mainRepository.fetchPokemonList(page) { isLoading = true }
+        mainRepository.fetchPokemonList(page, { isLoading = true }, { isLoading = false })
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

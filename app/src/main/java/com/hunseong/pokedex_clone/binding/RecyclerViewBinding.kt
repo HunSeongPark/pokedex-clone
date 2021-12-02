@@ -1,6 +1,5 @@
 package com.hunseong.pokedex_clone.binding
 
-import android.os.Handler
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +7,7 @@ import com.hunseong.pokedex_clone.model.Pokemon
 import com.hunseong.pokedex_clone.model.Result
 import com.hunseong.pokedex_clone.ui.adapter.PokemonAdapter
 import com.hunseong.pokedex_clone.ui.home.HomeViewModel
-import timber.log.Timber
+import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
 object RecyclerViewBinding {
 
@@ -22,14 +21,24 @@ object RecyclerViewBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("viewModel", "submitList")
-    fun bindSubmitList(view: RecyclerView, vm: HomeViewModel, result: Result) {
+    @BindingAdapter("submitList")
+    fun bindSubmitList(view: RecyclerView, result: Result) {
         if (result is Result.Success<*> && view.adapter is PokemonAdapter) {
             (view.adapter as ListAdapter<Any, *>).submitList(result.data as List<Pokemon>)
         }
-        Handler().postDelayed({
-            vm.isLoading = false
-        },500)
 
+    }
+
+    @JvmStatic
+    @BindingAdapter("paginationPokemonList")
+    fun paginationPokemonList(view: RecyclerView, viewModel: HomeViewModel) {
+        RecyclerViewPaginator(
+            recyclerView = view,
+            isLoading = { viewModel.isLoading },
+            loadMore = { viewModel.fetchNextPokemonList() },
+            onLast = { false }
+        ).run {
+            threshold = 8
+        }
     }
 }

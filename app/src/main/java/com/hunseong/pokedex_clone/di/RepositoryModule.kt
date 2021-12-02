@@ -1,7 +1,9 @@
 package com.hunseong.pokedex_clone.di
 
 import com.hunseong.pokedex_clone.db.PokemonDao
+import com.hunseong.pokedex_clone.db.PokemonInfoDao
 import com.hunseong.pokedex_clone.network.PokedexClient
+import com.hunseong.pokedex_clone.repository.DetailRepository
 import com.hunseong.pokedex_clone.repository.MainRepository
 import dagger.Module
 import dagger.Provides
@@ -21,5 +23,14 @@ object RepositoryModule {
         pokemonDao: PokemonDao,
     ) : MainRepository {
         return MainRepository(pokedexClient, pokemonDao)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideDetailRepository(
+        pokedexClient: PokedexClient,
+        pokemonInfoDao: PokemonInfoDao,
+    ) : DetailRepository {
+        return DetailRepository(pokedexClient, pokemonInfoDao)
     }
 }
