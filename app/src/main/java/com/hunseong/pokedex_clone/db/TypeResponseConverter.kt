@@ -8,6 +8,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import javax.inject.Inject
 
+
+// Room DB의 Entity에 List<TypeResponse>와 같은 custom class가 들어갈 수 있도록 하기 위해서는
+// type converter를 통한 직렬화 - 역직렬화가 가능하도록 해야함.
 @ProvidedTypeConverter
 class TypeResponseConverter @Inject constructor(
     private val moshi: Moshi
@@ -19,6 +22,7 @@ class TypeResponseConverter @Inject constructor(
         val listType = Types.newParameterizedType(List::class.java, PokemonInfo.TypeResponse::class.java)
         val adapter: JsonAdapter<List<PokemonInfo.TypeResponse>> = moshi.adapter(listType)
         return adapter.fromJson(value)
+
     }
 
     // 역직렬화
