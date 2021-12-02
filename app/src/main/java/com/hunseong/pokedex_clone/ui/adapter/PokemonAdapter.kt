@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.hunseong.pokedex_clone.databinding.ItemPokemonBinding
 import com.hunseong.pokedex_clone.model.Pokemon
 
-class PokemonAdapter : ListAdapter<Pokemon, PokemonAdapter.PokemonViewHolder>(diffUtil) {
+class PokemonAdapter(private val onClick: (Pokemon) -> Unit) :
+    ListAdapter<Pokemon, PokemonAdapter.PokemonViewHolder>(diffUtil) {
 
     inner class PokemonViewHolder(private val binding: ItemPokemonBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
-                //todo setOnClickListener
-                val position = bindingAdapterPosition.takeIf { it != NO_POSITION } ?: return@setOnClickListener
-                Toast.makeText(binding.root.context, getItem(position).name, Toast.LENGTH_SHORT).show()
+                val position =
+                    bindingAdapterPosition.takeIf { it != NO_POSITION } ?: return@setOnClickListener
+                onClick(getItem(position))
             }
         }
 

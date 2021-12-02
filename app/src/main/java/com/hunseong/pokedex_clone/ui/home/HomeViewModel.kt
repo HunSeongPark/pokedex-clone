@@ -1,4 +1,4 @@
-package com.hunseong.pokedex_clone.ui.main
+package com.hunseong.pokedex_clone.ui.home
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val mainRepository: MainRepository,
 ) : ViewModel() {
 

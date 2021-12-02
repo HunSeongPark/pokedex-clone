@@ -19,8 +19,7 @@ object RepositoryModule {
     fun provideMainRepository(
         pokedexClient: PokedexClient,
         pokemonDao: PokemonDao,
-        coroutineDispatcher: CoroutineDispatcher
     ) : MainRepository {
-        return MainRepository(pokedexClient, pokemonDao, coroutineDispatcher)
+        return MainRepository(pokedexClient, pokemonDao)
     }
 }
